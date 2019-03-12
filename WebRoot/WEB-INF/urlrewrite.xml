@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.1.dtd">
+<urlrewrite>
+	<!--所有点html匹配成.do -->
+	<rule>
+		<from>^/(\w+)\.html$</from>
+		<to>/$1.do</to>
+	</rule>
+	
+	<!-- 所有bank.~~~~结尾的都匹配到到动态Action -->
+	<rule>
+		<from>^/bank\.(\w+)$</from>
+		<to>/bank_$1.do</to>
+	</rule>
+</urlrewrite>  

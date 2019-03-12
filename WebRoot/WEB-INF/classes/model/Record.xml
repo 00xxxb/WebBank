@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 配置接口映射 -->
+<mapper namespace="Mapper.MyMethodMapper">
+ 
+	<!-- 查询得到最大的消费数 -->
+	<select id="getTotalRecord"  parameterType="int" resultType="int">
+		select count(*) from record where userid= #{id}
+	</select>
+	
+   <!--分页查询 -->
+	<select id="getRecord" resultMap="resultRecordList" >
+		select record.id,record.mes,record.money,record.time,record.userid from
+		record,user where record.userid=user.id and user.id=#{0} limit #{1},#{2}
+	</select>
+	
+	<resultMap id="resultRecordList" type="model.Record">
+		<id property="id" column="id"/>
+		<result property="mes" column="mes"/>
+		<result property="money" column="money"/>
+		<result property="time" column="time"/>
+		<association property="user" javaType="model.User" />
+	</resultMap>
+	
+	<!-- 插入日志 -->
+	 <insert id="addRecord" parameterType="model.Record" useGeneratedKeys="true" keyProperty="id">
+    	insert into record(mes,money,time,userid) values(#{mes},#{money},#{time},#{user.id})
+    </insert>
+</mapper>

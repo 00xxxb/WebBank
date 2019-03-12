@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+  
+  <!-- 登录/存/取/转 -->
+  <bean name="/bank" class="Action.BankAction" scope="prototype">
+  		<property name="manager" ref="ManagerImpl"/>
+  </bean>
+  <!-- 消费记录 -->
+  <bean name="/record" class="Action.RecordAction" scope="prototype">
+		<property name="manager" ref="ManagerImpl"></property>  
+  </bean>
+  <!-- 邮箱 -->
+  <bean name="/CheckEmail" class="Action.MailAction" scope="prototype">
+  		<property name="manager" ref="ManagerImpl"></property>
+  </bean>
+  <!-- 注册 -->
+  <bean name="/register" class="Action.RegisterAction" scope="prototype">
+  		<property name="manager" ref="ManagerImpl"></property>
+  </bean>
+  </beans>

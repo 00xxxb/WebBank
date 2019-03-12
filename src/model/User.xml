@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 配置接口映射 -->
+<mapper namespace="Mapper.MyMethodMapper">
+   
+    <!-- 注册用户 -->
+    <insert id="addUser" parameterType="model.User" useGeneratedKeys="true" keyProperty="id">
+    	insert into user(name,email,money,status) values(#{name},#{email},#{money},#{status})
+    </insert>
+   
+    <!-- 通过name查询到对应user的id -->
+    <select id="selectUserId" parameterType="string" resultType="Integer">
+   		select id from user where name = #{name}
+    </select>
+
+    <select id="selectUser"  parameterType="int"  resultType="model.User">
+    	select * from user where id = #{id}
+    </select>
+    
+    <select id="updateMoney" >
+    	update user set money = #{1} where id = #{0}
+    </select>
+    
+    <!-- 判断邮箱是否存在数据库中进行邮箱注册验证 -->
+    
+    <select id="getMail"  parameterType="string" resultMap="MailResult">
+		 select user.email from user where email = #{email}
+    </select>
+
+    <resultMap  id="MailResult" type="string">
+		<result column="email" property="email"/>    
+    </resultMap>
+     
+     <!-- 查询用户权限问题 -->
+     <select id="getPermission" resultMap="PermissionResult">
+     	select id,name,status from user
+     </select>
+     
+     <resultMap type="model.User" id="PermissionResult">
+     	<result column="id" property="id"/>
+     	<result column="name" property="name"/>
+     	<result column="status" property="status"/>
+     </resultMap>
+     
+     <!-- 冻结用户 -->
+     <select id="freeze" parameterType="int">
+     	update user set status=false where id=#{id}
+     </select>
+     
+     <!-- 解除冻结 -->
+     <select id="release" parameterType="int">
+     	update user set status=true where id=#{id}
+     </select>
+     
+</mapper>
+
+
+
